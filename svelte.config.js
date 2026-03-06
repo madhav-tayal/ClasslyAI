@@ -4,9 +4,14 @@ import adapter from '@sveltejs/adapter-vercel';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
+		alias: {
+			$convex: './src/lib/convex'
+		},
 		adapter: adapter(),
 		csp: {
 			directives: {
+				'worker-src': ['self', 'blob:'],
+				'child-src': ['self', 'blob:'],
 				'default-src': ['self'],
 				'script-src': [
 					'self',
@@ -27,6 +32,9 @@ const config = {
 				'frame-src': ['https://www.youtube-nocookie.com', 'https://www.youtube.com'],
 				'connect-src': [
 					'self',
+					'blob:',
+					'https://*.convex.cloud',
+					'wss://*.convex.cloud',
 					'https://www.youtube.com',
 					'https://googleads.g.doubleclick.net',
 					'https://*.google.com'

@@ -1,52 +1,55 @@
 <script lang="ts">
-	let { initialTodos = [] }: { initialTodos?: string[] } = $props();
+	import { useQuery, useConvexClient } from 'convex-svelte';
+	import { api } from '../convex/_generated/api';
+	import type { Id } from '../convex/_generated/dataModel';
+	import { Plus} from 'lucide-svelte';
+	import Button from './ui/Button.svelte';
+	// 1. Subscribe to the list of tasks
+	// 'tasks' will be a reactive object with .data, .isLoading, and .error
+	const tasks = useQuery(api.tasks.list, {});
+	const client = useConvexClient();
 
-	// State
-	let todos = $derived(initialTodos.map((t, i) => ({ id: i, text: t, done: false })));
-	let inputValue = $state('');
+	let todo = $state('');
 
-	// Derived
-	let remaining = $derived(todos.filter((t) => !t.done).length);
-
-	function addTodo(e: SubmitEvent) {
-		e.preventDefault();
-		const text = inputValue.trim();
-		if (!text) return;
-
-		todos.push({ id: Date.now(), text, done: false });
-		inputValue = '';
+	async function addTask(onSubmit: SubmitEvent) {
+		onSubmit.preventDefault();
+		if (todo.trim()) {
+			await client.mutation(api.tasks.add, { text: todo });
+			todo = '';
+		}
 	}
 
-	function removeTodo(id: number) {
-		const index = todos.findIndex((t) => t.id === id);
-		if (index !== -1) todos.splice(index, 1);
+	async function toggleTask(id: Id<'tasks'>, done: boolean) {
+		await client.mutation(api.tasks.toggle, { id, done });
+	}
+
+	async function removeTask(id: Id<'tasks'>) {
+		await client.mutation(api.tasks.remove, { id });
 	}
 </script>
 
-<div class="todo-widget">
-	<div class="header">
-		<h3>Tasks</h3>
-		<span class="badge">{remaining} pending</span>
-	</div>
-
-	<form onsubmit={addTodo} class="input-group">
-		<input type="text" bind:value={inputValue} placeholder="Add a new task..." />
-		<button type="submit" disabled={!inputValue.trim()}>+</button>
-	</form>
-
-	<ul class="list">
-		{#each todos as todo (todo.id)}
-			<li class:done={todo.done}>
-				<label>
-					<input type="checkbox" bind:checked={todo.done} />
-					<span>{todo.text}</span>
-				</label>
-				<button class="delete-btn" onclick={() => removeTodo(todo.id)} aria-label="Delete">×</button
-				>
+<h1>To Do</h1>
+<form onsubmit={addTask}>
+	<input bind:value={todo} type="text" placeholder="your task here" autocomplete="off" />
+	<Button type="submit"><Plus /></Button>
+</form>
+{#if tasks.isLoading}
+	<p>Loading tasks...</p>
+{:else if tasks.data}
+	<ul>
+		{#each tasks.data as task (task._id)}
+			<li>
+				<input
+					id="toggle"
+					type="checkbox"
+					checked={task.done}
+					onchange={(e) => toggleTask(task._id, e.currentTarget.checked)}
+				/>
+				<label for="toggle" class:completed={task.done}>{task.text}</label>
+				<Button type="button" onclick={() => removeTask(task._id)} variant="ghost">DELETE</Button>
 			</li>
 		{/each}
-		{#if todos.length === 0}
-			<li class="empty">All caught up!</li>
-		{/if}
 	</ul>
-</div>
+{:else}
+	<p>ERROR</p>
+{/if}

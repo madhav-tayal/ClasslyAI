@@ -15,6 +15,12 @@
 	import { resolve } from '$app/paths';
 	import ModeToggle from '$lib/components/ModeToggle.svelte';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
+
+	import { PUBLIC_CONVEX_URL } from '$env/static/public';
+	import { setupConvex } from 'convex-svelte';
+
+	setupConvex(PUBLIC_CONVEX_URL);
+
 	let { children }: { children: Snippet } = $props();
 
 	// 2. APPLY the global App.Link type here
