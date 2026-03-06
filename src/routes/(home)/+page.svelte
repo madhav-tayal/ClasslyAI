@@ -64,7 +64,7 @@
 
 	{#snippet redirect()}
 		<div class="actions">
-			<Button href="/dashboard" size="lg">
+			<Button variant='link' href="/dashboard" size="lg">
 				Get Started
 				<Icon icon={faArrowRight} />
 			</Button>

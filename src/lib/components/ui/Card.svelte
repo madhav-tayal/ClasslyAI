@@ -18,11 +18,16 @@
 
 <style>
 	.card {
-		display: inline;
+		display: flex;
+		flex-direction: column;
 		padding: 2rem;
-		background: var(--bg);
-		border: 1px solid var(--muted);
+		gap: 2rem;
+		margin: 1rem;
+
+		background: var(--gradient-embose);
+		border: 1px solid var(--border);
 		border-radius: var(--radius);
+		box-shadow: var(--shadow);
 		transition: transform var(--time);
 	}
 

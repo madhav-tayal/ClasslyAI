@@ -41,13 +41,23 @@
 		color: var(--text);
 	}
 	.btn[data-variant='outline'] {
-		background: transparent;
+		background: linear-gradient(0deg, var(--fg) 0%, var(--bg) 100%);
 		border-color: var(--muted);
 		color: var(--text);
 	}
 	.btn[data-variant='outline']:hover {
 		border-color: var(--text);
 		color: var(--text);
+	}
+
+		.btn[data-variant='link'] {
+		background: linear-gradient(0deg, var(--fg) 0%, var(--bg) 100%);
+		color: var(--text);
+		box-shadow: none;
+	}
+	.btn[data-variant='link']:hover {
+		background: var(--accent);
+		color: white;
 	}
 
 	/* Size logic */
@@ -66,4 +76,6 @@
 		padding: 0 2rem;
 		font-size: 1rem;
 	}
+
+	
 </style>
