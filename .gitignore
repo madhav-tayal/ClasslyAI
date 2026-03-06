@@ -4,6 +4,8 @@ node_modules/
 # Gemini (testing artifacts)
 /.gemini/*
 
+src/lib/convex/_generated/
+
 # Build / Output
 /.svelte-kit/
 /.output/
