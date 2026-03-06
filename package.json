@@ -36,13 +36,14 @@
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
-		"@fortawesome/fontawesome-svg-core": "^7.2.0",
-		"@fortawesome/free-brands-svg-icons": "^7.1.0",
-		"@fortawesome/free-solid-svg-icons": "^7.1.0",
+		"@fortawesome/free-solid-svg-icons": "^7.2.0",
 		"@google/genai": "^1.40.0",
 		"@google/generative-ai": "^0.24.1",
 		"@lucide/svelte": "^0.575.0",
 		"bits-ui": "^2.16.2",
+		"convex": "^1.32.0",
+		"convex-svelte": "^0.0.12",
+		"lucide-svelte": "^0.577.0",
 		"svelte-fa": "^4.0.4"
 	}
 }

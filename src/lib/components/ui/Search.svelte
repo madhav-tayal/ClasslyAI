@@ -30,9 +30,10 @@
 		display: flex;
 		align-items: center;
 		padding: var(--padding);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-base);
-		background: var(--form-input-bg, var(--bg));
+		border: 3px solid var(--border);
+		border-radius: var(--radius);
+		background: var( var(--mg)); 
+		
 	}
 	.search-container:focus-within {
 		border-color: var(--accent);

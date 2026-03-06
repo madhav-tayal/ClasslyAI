@@ -27,9 +27,8 @@
 
 <style>
 	form {
-		--form-input-bg: var(--bg);
-		--form-input-border: var(--border);
-		--form-text: var(--text);
+
+
 
 		display: flex;
 		flex-direction: column;
@@ -40,9 +39,9 @@
 	/* Preset-specific variable overrides */
 	form[data-preset='card'] {
 		padding: 2rem;
-		background: var(--bg);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
+		background: var(--mg);
+		border: 2px solid var(--border);
+		border-radius: var(--radius);
 		box-shadow: var(--shadow-card);
 		--form-input-bg: var(--bg); /* Nested inputs adapt to the card */
 	}

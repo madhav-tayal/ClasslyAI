@@ -41,7 +41,7 @@
 		color: var(--text);
 	}
 	.btn[data-variant='outline'] {
-		background: transparent;
+		background: var(--fg);
 		border-color: var(--muted);
 		color: var(--text);
 	}

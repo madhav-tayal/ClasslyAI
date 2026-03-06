@@ -127,19 +127,34 @@
 	</PageSection>
 
 	<PageSection>
-		<Form preset="card" onsubmit={generateQuiz}>
-			<label for="topic">Topic</label>
-			<Search id="topic" name="topic" variant="text" bind:value={topic} required />
+		<div class="form-container">
+			<Form preset="card" onsubmit={generateQuiz}>
+				<label for="topic">Topic</label>
+				<Search id="topic" name="topic" variant="text" bind:value={topic} required />
 
-			<label for="count">Number of questions</label>
-			<Search id="count" name="count" variant="number" min="1" max="20" bind:value={count} />
+				<label for="count">Number of questions</label>
+				<Search id="count" name="count" variant="number" min="1" max="20" bind:value={count} />
 
-			<div class="form-actions">
-				<Button type="submit" disabled={loading}>
-					{loading ? 'Generating…' : 'Generate Quiz'}
-				</Button>
-			</div>
-		</Form>
+				<div class="form-actions">
+					<Button variant="outline" type="submit" disabled={loading}>
+						{loading ? 'Generating…' : 'Generate Quiz'}
+					</Button>
+				</div>
+			</Form>
+			<Form preset="card">
+				<label for="topic">Quiz History</label>
+				<Search id="topic" name="topic" variant="text" placeholder="Search your quizzes" bind:value={topic} required />
+				<article class="historyy">
+					<ul>
+						<li>Quiz Uno</li>
+						<li>Quiz two</li>
+						<li>Quiz trio</li>
+					</ul>
+				</article>
+
+				
+			</Form>
+		</div>
 		{#if error}
 			<p role="alert" class="error-text">{error}</p>
 		{/if}
@@ -296,5 +311,17 @@
 	}
 	.text-success {
 		color: green;
+	}
+	.form-container {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+
+
+	}
+
+	.historyy {
+		overflow-y: auto;
+		min-height: 100%;
 	}
 </style>

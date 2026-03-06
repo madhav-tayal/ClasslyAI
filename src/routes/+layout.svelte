@@ -12,6 +12,10 @@
 	} from '@fortawesome/free-solid-svg-icons';
 	import { page } from '$app/state';
 
+	import { PUBLIC_CONVEX_URL } from '$env/static/public';
+	import { setupConvex } from 'convex-svelte';
+	setupConvex(PUBLIC_CONVEX_URL);
+
 	import { resolve } from '$app/paths';
 	import ModeToggle from '$lib/components/ModeToggle.svelte';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';

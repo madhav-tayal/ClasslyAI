@@ -63,7 +63,7 @@
 <PageHeader heading="Student Dashboard" subtitle="Live overview of performance and tasks.">
 	{#snippet badge()}
 		<ThemeSwitcher />
-		<span>Gemini powering you</span>
+		<span>Gemini Powered</span>
 	{/snippet}
 
 	{#snippet redirect()}
@@ -84,7 +84,8 @@
 				<h3>Priorities</h3>
 			</div>
 			<div class="card-content">
-				<Todo initialTodos={['Finish generic table', 'Refactor css']} />
+				<Todo />
+				
 			</div>
 		</div>
 
