@@ -20,6 +20,8 @@
 	import ModeToggle from '$lib/components/ModeToggle.svelte';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 
+
+
 	let { children }: { children: Snippet } = $props();
 
 	// 2. APPLY the global App.Link type here
