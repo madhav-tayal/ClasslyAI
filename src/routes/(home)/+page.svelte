@@ -108,10 +108,10 @@
 		<Icon icon={faGraduationCap} size="2x" color="var(--accent)" />
 	{/snippet}
 
-	<a href='/dashboard' >
+	<Button variant='ghost' href='/dashboard' >
 		Open Dashboard
 		<Icon icon={faArrowRight} />
-	</a>
+	</Button>
 </PageFooter>
 
 <style>

@@ -59,7 +59,14 @@
 		background: var(--accent);
 		color: white;
 	}
-
+	:global([data-button-root][data-variant='ghost'] ){
+	
+		color: var(--muted);
+	}
+	:global([data-button-root][data-variant='ghost']:hover) {
+		color: var(--text);
+		background: var(--mg)
+	}
 	/* Size logic */
 	:global([data-button-root][data-size='sm'] ){
 		height: 2rem;
