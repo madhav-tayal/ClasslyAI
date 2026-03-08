@@ -14,7 +14,7 @@
 		faArrowRight,
 		faGraduationCap
 	} from '@fortawesome/free-solid-svg-icons';
-	import { resolve } from '$app/paths';
+	
 
 	// home page content
 	const features = [
@@ -54,7 +54,7 @@
 </script>
 
 <PageHeader
-	heading="Study smarter, not harder"
+	heading="Study Smarter, Not Harder"
 	subtitle="ClasslyAI generates personalized study material, quizzes, and performance analytics — all driven by AI so you can focus on actually learning."
 >
 	{#snippet badge()}
@@ -108,10 +108,10 @@
 		<Icon icon={faGraduationCap} size="2x" color="var(--accent)" />
 	{/snippet}
 
-	<Button href={resolve('/dashboard')} size="lg">
+	<a href='/dashboard' >
 		Open Dashboard
 		<Icon icon={faArrowRight} />
-	</Button>
+	</a>
 </PageFooter>
 
 <style>
