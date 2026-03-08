@@ -1,5 +1,11 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import { Button } from 'bits-ui';
+	import type { ButtonRootProps } from 'bits-ui';
+
+	type Props = ButtonRootProps & {
+		variant?: 'default' | 'outline' | 'ghost' | 'link';
+		size?: 'default' | 'sm' | 'lg' | 'icon';
+	};
 
 	let {
 		variant = 'default',
@@ -7,21 +13,15 @@
 		disabled = false,
 		children,
 		...rest
-	}: {
-		variant?: 'default' | 'outline' | 'ghost' | 'link';
-		size?: 'default' | 'sm' | 'lg' | 'icon';
-		disabled?: boolean;
-		children?: Snippet;
-		[key: string]: unknown;
-	} = $props();
+	}: Props = $props();
 </script>
 
-<button class="btn" data-variant={variant} data-size={size} {disabled} {...rest}>
-	{@render children?.()}
-</button>
+<Button.Root class="btn" data-variant={variant} data-size={size} {disabled} {...rest} >
+		{@render children?.()}
+</Button.Root>
 
 <style>
-	.btn {
+	:global([data-button-root]){
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -33,49 +33,47 @@
 	}
 
 	/* Variant logic stays here, not in app.css */
-	.btn[data-variant='default'] {
+	:global([data-button-root][data-variant='default'] ){
 		background: var(--bg);
 		color: var(--muted);
 	}
-	.btn[data-variant='default']:hover {
+	:global([data-button-root][data-variant='default']:hover) {
 		color: var(--text);
 	}
-	.btn[data-variant='outline'] {
+	:global([data-button-root][data-variant='outline'] ){
 		background: var(--fg);
 		border-color: var(--muted);
 		color: var(--text);
 	}
-	.btn[data-variant='outline']:hover {
+	:global([data-button-root][data-variant='outline']:hover ){
 		border-color: var(--text);
 		color: var(--text);
 	}
 
-		.btn[data-variant='link'] {
-		background: linear-gradient(0deg, var(--fg) 0%, var(--bg) 100%);
+	:global([data-button-root][data-variant='link'] ){
+		background: var(--mg);
 		color: var(--text);
 		box-shadow: none;
 	}
-	.btn[data-variant='link']:hover {
+	:global([data-button-root][data-variant='link']:hover ){
 		background: var(--accent);
 		color: white;
 	}
 
 	/* Size logic */
-	.btn[data-size='sm'] {
+	:global([data-button-root][data-size='sm'] ){
 		height: 2rem;
 		padding: 0 0.75rem;
 		font-size: 0.75rem;
 	}
-	.btn[data-size='default'] {
+	:global([data-button-root][data-size='default'] ){
 		height: 2.5rem;
 		padding: 0 1rem;
 		font-size: 0.875rem;
 	}
-	.btn[data-size='lg'] {
+	:global([data-button-root][data-size='lg'] ){
 		height: 3rem;
 		padding: 0 2rem;
 		font-size: 1rem;
 	}
-
-	
 </style>

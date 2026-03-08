@@ -12,7 +12,7 @@
 
 	const images = Object.entries(assetFiles)
 		.filter(([path]) => !path.endsWith('.svg'))
-		.map(([_, url]) => url as string);
+		.map(([ url]) => url as string);
 
 	let showPopup = $state(false);
 	let currentIndex = $state(0);
@@ -43,7 +43,7 @@
 </script>
 
 <div class="grid">
-	{#each images as img, i}
+	{#each images as img, i (img)}
 		<button class="thumbnail-btn" onclick={() => open(i)}>
 			<img src={img} alt="Thumbnail {i}" />
 		</button>
@@ -70,7 +70,7 @@
 
 		<div class="carousel-container">
 			<div class="carousel-viewport" bind:this={scrollContainer} onscroll={handleScroll}>
-				{#each images as src, i}
+				{#each images as src, i (src)}
 					<div class="slide">
 						<img {src} alt="Gallery Item {i}" />
 					</div>
@@ -120,7 +120,7 @@
 		</div>
 
 		<div class="indicators">
-			{#each images as _, i}
+			{#each images as _, i (_)}
 				<button
 					class="dot {currentIndex === i ? 'active' : ''}"
 					onclick={() => open(i)}
