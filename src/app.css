@@ -17,34 +17,34 @@
 	--error: hsl(0 84% 60%);
 	--info: hsl(200 80% 45%);
 
-	--accent: hsl(0, 100%, 50%);
-	--shade: hsl(0, 50%, 50%);
+	--accent: hsl(2, 90%, 54%);
+	--shade: hsl(2, 45%, 48%);
 }
 
 /* =========================================
    DEFAULT THEME
    ========================================= */
 :root[data-theme='default'][data-mode='light'] {
-	--bg: hsl(0 0% 85%);
-	--mg: hsl(0 0% 90%);
-	--fg: hsl(0 0% 95%);
-	--highlight: hsl(0 0% 100%);
-	--text: hsl(0 0% 5%);
-	--muted: hsl(0 0% 30%);
-	--border: hsl(0 0% 70%);
-	--glint: hsl(0 0% 80%);
+	--bg: hsl(220 8% 85%);
+	--mg: hsl(220 8% 90%);
+	--fg: hsl(220 8% 96%);
+	--highlight: hsl(220 10% 100%);
+	--text: hsl(220 12% 6%);
+	--muted: hsl(220 8% 32%);
+	--border: hsl(220 8% 70%);
+	--glint: hsl(220 8% 80%);
 	--shadow: 0px 2px 2px hsla(0, 0%, 0%, 0.15);
 }
 
 :root[data-theme='default'][data-mode='dark'] {
-	--bg: hsl(0 0% 0%);
-	--mg: hsl(0 0% 5%);
-	--fg: hsl(0 0% 10%);
-	--highlight: hsl(0 0% 60%);
-	--text: hsl(0 0% 95%);
-	--muted: hsl(0 0% 70%);
-	--border: hsl(0 0% 30%);
-	--glint: hsl(0 0% 40%);
+	--bg: hsl(220 12% 4%);
+	--mg: hsl(220 12% 8%);
+	--fg: hsl(220 12% 12%);
+	--highlight: hsl(220 8% 60%);
+	--text: hsl(220 10% 95%);
+	--muted: hsl(220 8% 70%);
+	--border: hsl(220 10% 30%);
+	--glint: hsl(220 8% 40%);
 	--shadow: 0px 2px 2px hsla(0, 0%, 100%, 0.2);
 	
 }
