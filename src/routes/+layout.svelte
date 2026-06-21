@@ -17,7 +17,6 @@
 	setupConvex(PUBLIC_CONVEX_URL);
 
 	import { resolve } from '$app/paths';
-	import ModeToggle from '$lib/components/ModeToggle.svelte';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
 
@@ -37,7 +36,6 @@
 <SideBar></SideBar>
 
 <div class="colors">
-	<ModeToggle />
 	<ThemeSwitcher />
 </div>
 

@@ -17,7 +17,30 @@
 
 	import { resolve } from '$app/paths';
 	import { Settings } from 'lucide-svelte';
-	
+	import { onMount } from 'svelte';
+	import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+
+	let mode = $state<'light' | 'dark'>('dark');
+
+	onMount(() => {
+		const savedMode = localStorage.getItem('mode') as 'light' | 'dark';
+		if (savedMode) {
+			mode = savedMode;
+		}
+	});
+
+	$effect(() => {
+		const root = document.documentElement;
+		root.setAttribute('data-mode', mode);
+		root.classList.toggle('dark', mode === 'dark');
+		root.style.colorScheme = mode;
+		localStorage.setItem('mode', mode);
+	});
+
+	function toggleMode() {
+		mode = mode === 'light' ? 'dark' : 'light';
+	}
+
     const links: App.Link[] = [
 		{ name: 'Home', path: '/', icon: faHome, size: '2x' },
 		{ name: 'Dashboard', path: '/dashboard', icon: faTachometerAlt, size: '2x' },
@@ -48,7 +71,14 @@
 				</li>
 		</ul>
 	</nav>
-	
+
+	<div class="mode-section">
+		<button type="button" onclick={toggleMode} aria-label="Switch to {mode === 'light' ? 'dark' : 'light'} mode">
+			<Icon icon={mode === 'light' ? faMoon : faSun} size={'2x'} />
+			<span>{mode === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+		</button>
+	</div>
+
 </aside>
 <style>
 	* {
@@ -92,7 +122,26 @@
 		color: var(--text);
 	}
 
-	
+	.mode-section {
+		border-top: 1px solid var(--muted);
+	}
+	.mode-section button {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding: 1rem;
+		width: 100%;
+		border: none;
+		background: transparent;
+		color: var(--text);
+		font: inherit;
+		cursor: pointer;
+	}
+	.mode-section button:hover {
+		color: var(--muted);
+	}
+
+
 	
 
 	@media only screen and (max-width: 600px) {
