@@ -6,7 +6,7 @@ declare global {
 	namespace App {
 		interface Link {
 			name: string;
-			path: '/' | '/dashboard' | '/quizzes' | '/about';
+			path: '/' | '/dashboard' | '/study' | '/quizzes' | '/settings' | '/about';
 			icon: IconDefinition;
 			size?: IconSize | string;
 		}

@@ -1,66 +1,61 @@
 <script lang="ts">
+	import { useQuery } from 'convex-svelte';
+	import { api } from '$lib/convex/_generated/api';
+
 	import PageHeader from '$lib/components/layout/PageHeader.svelte';
 	import PageSection from '$lib/components/layout/PageSection.svelte';
 	import PageFooter from '$lib/components/layout/PageFooter.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Icon from '$lib/components/ui/Icon.svelte';
 
-	// Import upgraded components
 	import Table, { type TableColumn } from '$lib/components/Table.svelte';
 	import AreaChart from '$lib/components/AreaChart.svelte';
 	import Todo from '$lib/components/Todo.svelte';
-	import Gallery from '$lib/components/Gallery.svelte';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
+	import StatTiles from '$lib/components/dashboard/StatTiles.svelte';
+	import WeakTopics from '$lib/components/dashboard/WeakTopics.svelte';
+	import { shortDate } from '$lib/format';
 
-	import {
-		faArrowRight,
-		faDownload,
-		faListCheck,
-		faImage
-	} from '@fortawesome/free-solid-svg-icons';
+	import { faArrowRight, faListCheck, faChartLine } from '@fortawesome/free-solid-svg-icons';
 
-	// 1. Define Data LOCALLY with strict types
-	// This proves the component works without external JSON and fixes the type error.
-	interface Student {
-		id: number;
-		name: string;
-		grade: number;
-		status: 'Active' | 'Inactive';
+	const stats = useQuery(api.stats.summary, {});
+	const attempts = useQuery(api.attempts.list, { limit: 20 });
+
+	interface AttemptRow {
+		topic: string;
+		score: string;
+		percentage: number;
+		taken: string;
 	}
 
-	const students: Student[] = [
-		{ id: 101, name: 'Alice Johnson', grade: 92, status: 'Active' },
-		{ id: 102, name: 'Bob Smith', grade: 78, status: 'Inactive' },
-		{ id: 103, name: 'Charlie Brown', grade: 88, status: 'Active' },
-		{ id: 104, name: 'Diana Prince', grade: 95, status: 'Active' },
-		{ id: 105, name: 'Evan Wright', grade: 64, status: 'Inactive' }
+	const rows = $derived<AttemptRow[]>(
+		(attempts.data ?? []).map((a) => ({
+			topic: a.topic,
+			score: `${a.correct}/${a.total}`,
+			percentage: a.percentage,
+			taken: shortDate(a._creationTime)
+		}))
+	);
+
+	const columns: TableColumn<AttemptRow>[] = [
+		{ key: 'topic', label: 'Topic', sortable: true },
+		{ key: 'score', label: 'Score', align: 'center' },
+		{ key: 'percentage', label: '%', align: 'center', sortable: true },
+		{ key: 'taken', label: 'Taken', align: 'right', sortable: true }
 	];
 
-	// Explicitly typed columns using the exported interface from Table.svelte
-	const columns: TableColumn<Student>[] = [
-		{ key: 'id', label: 'ID', width: '80px', sortable: true },
-		{ key: 'name', label: 'Student Name', sortable: true },
-		{ key: 'grade', label: 'Grade (%)', align: 'center', sortable: true },
-		{ key: 'status', label: 'Status', align: 'right' }
-	];
-
-	// Example Data
-	const chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-	const chartDatasets = [
+	// One series, so no legend — the section heading names it.
+	const chartLabels = $derived((stats.data?.trend ?? []).map((t) => shortDate(t.at)));
+	const chartDatasets = $derived([
 		{
-			label: 'Sales',
-			data: [400, 300, 550, 480, 700, 900],
-			color: 'var(--accent)' // Uses your Blue 500
-		},
-		{
-			label: 'Views',
-			data: [200, 150, 300, 250, 400, 500],
-			color: '#10b981' // Emerald 500 example
+			label: 'Score %',
+			data: (stats.data?.trend ?? []).map((t) => t.percentage),
+			color: 'var(--accent)'
 		}
-	];
+	]);
 </script>
 
-<PageHeader heading="Student Dashboard" subtitle="Live overview of performance and tasks.">
+<PageHeader heading="Your Dashboard" subtitle="How your quizzes have been going.">
 	{#snippet badge()}
 		<ThemeSwitcher />
 		<span>Gemini Powered</span>
@@ -68,13 +63,36 @@
 
 	{#snippet redirect()}
 		<div class="actions">
-			<Button variant="outline" size="lg">
-				Export
-				<Icon icon={faDownload} />
+			<Button href="/quizzes" variant="outline" size="lg">
+				New Quiz
+				<Icon icon={faArrowRight} />
 			</Button>
 		</div>
 	{/snippet}
 </PageHeader>
+
+<PageSection heading="At a glance">
+	{#if stats.isLoading}
+		<p class="muted-text">Loading…</p>
+	{:else if stats.error}
+		<p role="alert" class="error-text">Could not load your stats.</p>
+	{:else if stats.data}
+		<StatTiles
+			quizzesTaken={stats.data.quizzesTaken}
+			averageScore={stats.data.averageScore}
+			bestScore={stats.data.bestScore}
+			materialsSaved={stats.data.materialsSaved}
+		/>
+	{/if}
+</PageSection>
+
+<PageSection heading="Score trend">
+	{#if chartLabels.length > 1}
+		<AreaChart labels={chartLabels} datasets={chartDatasets} height={320} />
+	{:else}
+		<p class="muted-text">Take a couple of quizzes and your trend will show up here.</p>
+	{/if}
+</PageSection>
 
 <PageSection heading="My Workspace">
 	<div class="workspace-grid">
@@ -85,31 +103,30 @@
 			</div>
 			<div class="card-content">
 				<Todo />
-				
 			</div>
 		</div>
 
 		<div class="workspace-card">
 			<div class="card-header">
-				<Icon icon={faImage} size="1.2rem" color="var(--accent)" />
-				<h3>Snapshots</h3>
+				<Icon icon={faChartLine} size="1.2rem" color="var(--accent)" />
+				<h3>Weakest topics</h3>
 			</div>
-			<div class="card-content">
-				<Gallery />
+			<div class="card-content scrollable">
+				<WeakTopics topics={stats.data?.weakTopics ?? []} />
 			</div>
 		</div>
 	</div>
 </PageSection>
 
-<PageSection heading="Performance Overview">
-	<AreaChart labels={chartLabels} datasets={chartDatasets} height={320} />
+<PageSection heading="Recent attempts">
+	{#if rows.length}
+		<Table data={rows} {columns} paginated={true} pageSize={8} />
+	{:else}
+		<p class="muted-text">Nothing yet — your quiz results will be listed here.</p>
+	{/if}
 </PageSection>
 
-<PageSection heading="Student Records">
-	<Table data={students} {columns} paginated={true} pageSize={4} selectable={true} />
-</PageSection>
-
-<PageFooter heading="Ready to level up?" subtitle="Upgrade for more features.">
+<PageFooter heading="Want to change how quizzes work?" subtitle="Tune the defaults in settings.">
 	<Button href="/settings" size="lg">
 		Settings
 		<Icon icon={faArrowRight} />
@@ -156,5 +173,19 @@
 	.card-content {
 		flex: 1;
 		overflow: hidden; /* Contains the scrollable children */
+	}
+
+	.card-content.scrollable {
+		overflow-y: auto;
+	}
+
+	.muted-text {
+		color: var(--muted);
+		margin: 0;
+	}
+
+	.error-text {
+		color: var(--error, #ef4444);
+		margin: 0;
 	}
 </style>

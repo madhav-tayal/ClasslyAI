@@ -46,7 +46,6 @@
 	--border: hsl(220 10% 30%);
 	--glint: hsl(220 8% 40%);
 	--shadow: 0px 2px 2px hsla(0, 0%, 100%, 0.2);
-	
 }
 
 /* =========================================
@@ -130,6 +129,33 @@
 	--shadow: 0px 2px 2px hsla(210, 50%, 100%, 0.1);
 }
 
+/* =========================================
+   AMETHYST THEME
+   ========================================= */
+:root[data-theme='amethyst'][data-mode='light'] {
+	--bg: hsl(270 40% 85%);
+	--mg: hsl(270 40% 90%);
+	--fg: hsl(270 40% 95%);
+	--highlight: hsl(270 40% 100%);
+	--text: hsl(275 60% 15%);
+	--muted: hsl(272 40% 40%);
+	--border: hsl(270 40% 65%);
+	--glint: hsl(270 40% 75%);
+	--shadow: 0px 2px 2px hsla(275, 60%, 0%, 0.15);
+}
+
+:root[data-theme='amethyst'][data-mode='dark'] {
+	--bg: hsl(275 55% 8%);
+	--mg: hsl(275 55% 13%);
+	--fg: hsl(275 55% 18%);
+	--highlight: hsl(270 45% 45%);
+	--text: hsl(280 60% 92%);
+	--muted: hsl(272 40% 65%);
+	--border: hsl(275 50% 27%);
+	--glint: hsl(275 50% 37%);
+	--shadow: 0px 2px 2px hsla(270, 50%, 100%, 0.1);
+}
+
 /* --- Reset Globals (User Agent Stylesheets) --- */
 
 *,
@@ -138,7 +164,17 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	transition: all var(--time) var(--ease);
+
+	/* Scoped to color properties only. Theme/mode switches still animate
+	   smoothly, but we no longer transition layout, size, or transform on
+	   every node, which is what makes `transition: all` expensive. */
+	transition:
+		background-color var(--time) var(--ease),
+		border-color var(--time) var(--ease),
+		color var(--time) var(--ease),
+		fill var(--time) var(--ease),
+		stroke var(--time) var(--ease),
+		box-shadow var(--time) var(--ease);
 }
 .no-transition {
 	transition: none !important;
@@ -172,8 +208,8 @@ video,
 canvas,
 svg {
 	display: block;
-	max-width: auto;
-	height: 100%;
+	max-width: 100%;
+	height: auto;
 }
 
 /* Form elements inherit font styles */

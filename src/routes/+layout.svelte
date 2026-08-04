@@ -1,36 +1,16 @@
 <script lang="ts">
 	import '../app.css';
 	import type { Snippet } from 'svelte';
-	import Icon from '$lib/components/ui/Icon.svelte';
-	import {
-		faHome,
-		faTachometerAlt,
-		faQuestionCircle,
-		faInfoCircle,
-		faCog,
-		faCloudMoonRain
-	} from '@fortawesome/free-solid-svg-icons';
-	import { page } from '$app/state';
 
 	import { PUBLIC_CONVEX_URL } from '$env/static/public';
 	import { setupConvex } from 'convex-svelte';
 	setupConvex(PUBLIC_CONVEX_URL);
 
-	import { resolve } from '$app/paths';
 	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
 
-
-
+	// The nav lives in SideBar, this just wraps the page around it.
 	let { children }: { children: Snippet } = $props();
-
-	// 2. APPLY the global App.Link type here
-	const links: App.Link[] = [
-		{ name: 'Home', path: '/', icon: faHome, size: '2x' },
-		{ name: 'Dashboard', path: '/dashboard', icon: faTachometerAlt, size: '2x' },
-		{ name: 'Quizzes', path: '/quizzes', icon: faQuestionCircle, size: '2x' },
-		{ name: 'About', path: '/about', icon: faInfoCircle, size: '2x' }
-	];
 </script>
 
 <SideBar></SideBar>

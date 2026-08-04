@@ -6,8 +6,8 @@
 		faTachometerAlt,
 		faQuestionCircle,
 		faInfoCircle,
-		faCog,
-		faCloudMoonRain
+		faBookOpen,
+		faCog
 	} from '@fortawesome/free-solid-svg-icons';
 	import { page } from '$app/state';
 
@@ -44,9 +44,10 @@
     const links: App.Link[] = [
 		{ name: 'Home', path: '/', icon: faHome, size: '2x' },
 		{ name: 'Dashboard', path: '/dashboard', icon: faTachometerAlt, size: '2x' },
+		{ name: 'Study', path: '/study', icon: faBookOpen, size: '2x' },
 		{ name: 'Quizzes', path: '/quizzes', icon: faQuestionCircle, size: '2x' },
 		{ name: 'About', path: '/about', icon: faInfoCircle, size: '2x' }
-       
+
 	];
     </script>
 
