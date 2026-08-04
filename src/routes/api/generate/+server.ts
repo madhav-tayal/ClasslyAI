@@ -45,6 +45,9 @@ Return ONLY valid JSON in this exact format:
 		if (e?.status === 503 || e?.message?.toString().toLowerCase().includes('high demand')) {
 			throw error(503, 'Model is currently unavailable. Please try again later.');
 		}
+		if (e?.message?.includes('API key')) {
+			throw error(500, e.message);
+		}
 		throw error(500, 'Failed to generate study material');
 	}
 };

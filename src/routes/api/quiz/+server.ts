@@ -36,6 +36,10 @@ Return ONLY valid JSON in this exact format:
 		return json({ success: true, quizData });
 	} catch (err) {
 		console.error('Gemini quiz error:', err);
+		const e = err as unknown as { message?: string };
+		if (e?.message?.includes('API key')) {
+			error(500, e.message);
+		}
 		error(500, 'Failed to generate quiz questions');
 	}
 };

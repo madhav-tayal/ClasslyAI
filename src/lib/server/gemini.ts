@@ -47,6 +47,12 @@ export async function generateText(
 				message?: string;
 				error?: { code?: number };
 			};
+			// A rejected key looks like any other 400, and the raw Google error is a
+			// wall of JSON, so it gets called out here instead.
+			if (e?.message?.toString().includes('API_KEY_INVALID')) {
+				throw new Error('Gemini rejected the API key. Check GEMINI_API_KEY in .env.local.');
+			}
+
 			const retryable =
 				e?.status === 503 ||
 				e?.code === 503 ||

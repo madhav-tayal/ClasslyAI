@@ -130,8 +130,8 @@
 				<div>
 					<h3>Saved quizzes</h3>
 					<p class="hint">
-						{quizzes.data?.length ?? 0} saved. Deleting these also removes their scores, so the
-						dashboard resets.
+						{quizzes.data?.length ?? 0} saved. Deleting these also removes their scores, so the dashboard
+						resets.
 					</p>
 				</div>
 				<Button variant="outline" onclick={clearQuizzes} disabled={clearing === 'quizzes'}>

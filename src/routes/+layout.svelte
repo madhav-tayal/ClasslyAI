@@ -38,13 +38,12 @@
 	main {
 		margin-left: var(--sidebar);
 	}
-	
-	
+
 	div {
 		height: 4rem;
 		text-decoration: none;
 	}
-	
+
 	div {
 		display: flex;
 		flex-direction: row;
@@ -52,27 +51,17 @@
 		padding: 1rem;
 	}
 
-	
 	div:hover {
 		color: var(--muted);
 	}
-	
-		
-	
+
 	div {
 		color: var(--text);
 	}
 
-	
-	
-	
-
 	@media only screen and (max-width: 600px) {
-		
 		main {
 			margin: 0;
 		}
 	}
-
-	
 </style>
